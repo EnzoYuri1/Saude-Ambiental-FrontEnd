@@ -1,0 +1,50 @@
+---
+import ReviewCard from "@/components/reviews/ReviewCard.astro";
+import { reviews, reviewsNote } from "@/data/reviews";
+---
+
+<section
+  id="processo"
+  data-marquee
+  class="overflow-hidden bg-white pt-[90px] pb-[75px] max-md:pt-[65px] max-md:pb-[55px]"
+  aria-labelledby="reviews-title"
+>
+  <div class="mx-auto mb-[55px] max-w-[1000px] px-[7%] text-center max-md:mb-[35px]">
+    <p class="eyebrow font-bold text-green">AVALIAÇÕES DE CLIENTES</p>
+    <h2 id="reviews-title" class="text-[clamp(34px,4vw,54px)] leading-[1.12] tracking-[-2px]">
+      Confira as avaliações<br />dos nossos clientes.
+    </h2>
+    <p class="text-lg text-muted">Experiências em residências, condomínios e empresas.</p>
+    <p class="mx-auto mt-[15px] max-w-[660px] text-[13px] text-muted">{reviewsNote}</p>
+  </div>
+
+  <div
+    class="marquee-hover-pause relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)]"
+  >
+    <div class="marquee-track">
+      {
+        [false, true].map((ghost) => (
+          <div class="flex shrink-0 gap-6 pr-6" aria-hidden={ghost || undefined}>
+            {reviews.map((review) => (
+              <ReviewCard review={review} />
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="mt-[30px] text-center">
+    <button
+      type="button"
+      data-marquee-pause
+      data-pause-text="Pausar avaliações"
+      data-play-text="Reproduzir avaliações"
+      data-subject="avaliações"
+      aria-pressed="false"
+      class="cursor-pointer rounded-[25px] border border-[#ccdcd1] bg-white px-[18px] py-[9px] text-sm text-green hover:bg-[#f0f6f2]"
+    >
+      Pausar avaliações
+    </button>
+  </div>
+</section>

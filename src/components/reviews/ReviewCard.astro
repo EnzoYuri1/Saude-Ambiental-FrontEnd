@@ -1,0 +1,42 @@
+---
+import type { Review } from "@/data/reviews";
+
+interface Props {
+  review: Review;
+}
+
+const { review } = Astro.props;
+const initials = review.person.charAt(0).toUpperCase();
+const stars = "★".repeat(review.stars);
+---
+
+<article
+  class="flex min-h-[330px] w-[360px] max-w-[86vw] flex-col rounded-[24px] border border-[#e1e8e3] bg-white p-[30px] shadow-[0_8px_25px_rgba(18,50,78,0.03)] max-md:w-[290px] max-md:p-[25px]"
+>
+  <div
+    class="mb-3.5 text-[23px] leading-[1.2] tracking-[2px] text-green"
+    aria-label={`${review.stars} de 5 estrelas`}
+  >
+    {stars}
+  </div>
+  <span
+    class="self-start rounded-[20px] bg-[#edf5ef] px-3 py-[5px] text-[11px] font-bold tracking-[0.5px] text-green"
+  >
+    {review.tag}
+  </span>
+  <blockquote class="mt-5 mb-8 flex-1 text-lg leading-[1.65] text-[#536470] italic">
+    “{review.quote}”
+  </blockquote>
+  <div class="flex items-center gap-3.5 border-t border-[#e6ece8] pt-[18px]">
+    <span
+      class="grid h-[45px] w-[45px] place-items-center rounded-full bg-lime font-bold text-navy"
+      aria-hidden="true"
+    >
+      {initials}
+    </span>
+    <div>
+      <strong class="block text-sm">{review.person}</strong>
+      <span class="text-[13px] text-muted">{review.context}</span>
+    </div>
+  </div>
+</article>
