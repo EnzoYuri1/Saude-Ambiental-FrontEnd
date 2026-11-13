@@ -11,7 +11,7 @@ export interface QuoteData {
 /** Monta a mensagem de orçamento (mesmo template do layout de referência). */
 export function buildQuoteMessage(data: QuoteData): string {
   return [
-    `Olá, ${site.brand.short}! Gostaria de solicitar um orçamento.`,
+    `Olá, ${site.brand.prose}! Gostaria de solicitar um orçamento.`,
     "",
     `Nome: ${data.name}`,
     `WhatsApp: ${data.phone}`,

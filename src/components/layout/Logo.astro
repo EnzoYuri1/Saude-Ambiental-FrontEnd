@@ -1,37 +1,28 @@
 ---
 /**
- * Logotipo provisório (SVG inline) — sem marca real.
- * Substituir por `<img src={...}>` quando a marca definitiva existir;
- * o restante do site não depende deste arquivo.
+ * Logotipo oficial (PNG transparente, `src/assets/images/brand/logo.png`).
+ * Todas as aparições da marca do site passam por este componente.
  */
+import { Image } from "astro:assets";
+import logo from "@/assets/images/brand/logo.png";
 import { site } from "@/data/site";
 
 interface Props {
-  class?: string;
+  /** Largura em px — a proporção (≈3:1) é preservada. */
+  width?: number;
   variant?: "default" | "light";
 }
 
-const { class: className = "", variant = "default" } = Astro.props;
-const markColor = variant === "light" ? "#c4ef8c" : "#258859";
-const textColor = variant === "light" ? "#ffffff" : "#12324e";
-const subtitleColor = variant === "light" ? "#c4ef8c" : "#258859";
+const { width = 190, variant = "default" } = Astro.props;
+const height = Math.round(width / (2000 / 661));
 ---
 
-<span class:list={["inline-flex items-center gap-2.5", className]}>
-  <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" class="shrink-0">
-    <path fill="#12324e" d="M3 3h26v13L16 30 3 16z"></path>
-    <path fill={markColor} d="M16 8.2c-2.1 2.7-4 5.2-4 7.3a4 4 0 0 0 8 0c0-2.1-1.9-4.6-4-7.3z"
-    ></path>
-  </svg>
-  <span class="leading-none">
-    <span class="block text-[19px] font-extrabold tracking-wide" style={`color:${textColor}`}>
-      {site.brand.short}
-    </span>
-    <span
-      class="block text-[11px] font-semibold tracking-[2.5px] uppercase"
-      style={`color:${subtitleColor}`}
-    >
-      {site.brand.name}
-    </span>
-  </span>
-</span>
+<Image
+  src={logo}
+  alt={site.brand.logoAlt}
+  width={2000}
+  height={661}
+  class="h-auto w-auto"
+  style={`width:${width}px;height:${height}px`}
+  loading={variant === "light" ? "eager" : "lazy"}
+/>

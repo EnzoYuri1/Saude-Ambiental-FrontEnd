@@ -4,12 +4,13 @@
  */
 export const site = {
   brand: {
-    short: "SAA",
+    short: "SAFE",
     name: "Saúde Ambiental",
-    fullName: "SAA Saúde Ambiental",
+    fullName: "Safe Saúde Ambiental",
+    /** Nome para frases correntes (ex.: "Somos a Safe.", "Olá, Safe!"). */
+    prose: "Safe",
     tagline: "Cuidado com a água e com o seu ambiente.",
-    /** Texto alternativo da logo (sem marca real por enquanto). */
-    logoAlt: "SAA Saúde Ambiental — marca provisória",
+    logoAlt: "Safe Saúde Ambiental",
   },
   contact: {
     /**

@@ -1,6 +1,7 @@
 ---
 import QuoteForm from "@/components/contact/QuoteForm.astro";
 import Logo from "@/components/layout/Logo.astro";
+import { site } from "@/data/site";
 ---
 
 <section
@@ -11,13 +12,13 @@ import Logo from "@/components/layout/Logo.astro";
   <div>
     <p class="eyebrow font-bold text-lime">VAMOS CUIDAR DO SEU AMBIENTE</p>
     <h2 id="contact-title" class="text-[clamp(34px,4vw,54px)] leading-[1.12] tracking-[-2px]">
-      O próximo passo<br />é falar com a gente.
+      O próximo passo<br />é falar com a {site.brand.prose}.
     </h2>
     <p class="text-[#cedcdd]">
       Conte o que você precisa.<br />Prepare sua solicitação de orçamento.
     </p>
     <div class="mt-10 w-fit rounded-md bg-white p-[18px] max-md:hidden">
-      <Logo class="w-[200px]" />
+      <Logo width={200} />
     </div>
   </div>
 

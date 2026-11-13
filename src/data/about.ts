@@ -7,10 +7,10 @@ import { site } from "@/data/site";
  */
 export const about = {
   eyebrow: "SOBRE NÓS",
-  titleLine1: `Somos a ${site.brand.short}.`,
+  titleLine1: `Somos a ${site.brand.prose}.`,
   titleLine2: "Cuidar é a nossa essência.",
   paragraphs: [
-    `A ${site.brand.short} nasceu de uma ideia simples: cuidar dos ambientes é também cuidar das pessoas. Foi com esse olhar, atento às necessidades de cada cliente, que começamos a construir nossa história.`,
+    `A ${site.brand.prose} nasceu de uma ideia simples: cuidar dos ambientes é também cuidar das pessoas. Foi com esse olhar, atento às necessidades de cada cliente, que começamos a construir nossa história.`,
     "A cada novo desafio, ampliamos esse cuidado. Hoje, reunimos soluções para controle de pragas, higienização de reservatórios, poços e tratamento de água e esgoto, conectando saúde ambiental à rotina de residências, condomínios e empresas.",
   ],
   purposeLine1: "Cuidamos do que é essencial:",

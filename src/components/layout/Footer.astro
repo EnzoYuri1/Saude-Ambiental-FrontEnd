@@ -7,14 +7,13 @@ import Logo from "@/components/layout/Logo.astro";
   class="flex flex-wrap items-center justify-between gap-[25px] px-[7%] py-[45px] max-md:items-start max-md:flex-col max-md:gap-2.5"
 >
   <a href="#inicio" aria-label="Voltar ao início">
-    <Logo class="w-[170px]" />
+    <Logo width={170} />
   </a>
   <p class="text-sm max-md:my-2.5">{site.brand.tagline}</p>
   <a href="#inicio" class="text-sm font-semibold text-green hover:text-green-dark"
     >Voltar ao início ↑</a
   >
   <small class="w-full border-t border-[#e0e8e3] pt-5 text-sm text-muted">
-    © {new Date().getFullYear()}
-    {site.brand.fullName} · Layout de portfólio, sem marca real.
+    © {new Date().getFullYear()} {site.brand.fullName}
   </small>
 </footer>

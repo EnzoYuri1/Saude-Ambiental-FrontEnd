@@ -78,7 +78,7 @@ src/
 
 ## TODO antes de publicar de verdade
 
-- [ ] Marca real (logo + nome) em `site.ts`/`Logo.astro`
+- [x] Marca real (logo + nome) em `site.ts`/`Logo.astro`
 - [ ] Fotos reais dos serviços em `assets/images/`
 - [ ] Número real de WhatsApp em `site.ts`
 - [ ] Domínio próprio em `astro.config.mjs` + `seo.ts` + `robots.txt`
