@@ -1,0 +1,29 @@
+---
+import ServiceShowcase from "@/components/services/ServiceShowcase.astro";
+import ServiceRail from "@/components/services/ServiceRail.astro";
+import { services } from "@/data/services";
+---
+
+<section id="servicos" class="bg-paper pt-[90px] max-md:pt-[65px]">
+  <div
+    class="container-x mb-[65px] flex items-end justify-between gap-[30px] max-md:mb-[35px] max-md:block"
+  >
+    <div>
+      <p class="eyebrow font-bold text-green">SOLUÇÕES SAFE</p>
+      <h2 class="m-0 text-[clamp(34px,4vw,54px)] leading-[1.12] tracking-[-2px]">
+        Um cuidado para<br />cada necessidade.
+      </h2>
+    </div>
+    <p class="text-muted max-md:mt-[22px]">
+      Explore nossos serviços e encontre<br />a solução para o seu ambiente.
+    </p>
+  </div>
+
+  {
+    services.map((service, index) => (
+      <ServiceShowcase service={service} index={index} total={services.length} />
+    ))
+  }
+
+  <ServiceRail />
+</section>

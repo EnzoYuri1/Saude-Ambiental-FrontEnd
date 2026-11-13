@@ -1,0 +1,169 @@
+---
+import { Image } from "astro:assets";
+import type { Service } from "@/data/services";
+
+interface Props {
+  service: Service;
+  index: number;
+  total: number;
+}
+
+const { service, index, total } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, "0");
+const number = `${pad(index + 1)} / ${pad(total)}`;
+
+/** Visual em crossfade: serviços com slides variam; os demais têm visual único. */
+const visuals = service.slides
+  ? service.slides.map((slide) => ({
+      image: slide.image,
+      position: slide.position,
+      name: slide.name,
+      alt: "",
+    }))
+  : [{ image: service.image, position: undefined, name: "", alt: service.alt }];
+
+/** Painéis de texto: mesma forma nos dois casos (`how` sempre lista). */
+const panels = service.slides
+  ? service.slides.map((slide) => ({
+      category: slide.category,
+      title: slide.name,
+      description: slide.description,
+      how: [slide.how],
+    }))
+  : [
+      {
+        category: service.category,
+        title: service.title,
+        description: service.description,
+        how: service.details,
+      },
+    ];
+
+const hasShowcase = Boolean(service.slides);
+---
+
+<article
+  id={service.id}
+  data-rail-section
+  {...hasShowcase
+    ? { "data-showcase": true, "data-interval": "7000", "data-pause-on-hover": true }
+    : {}}
+  class="relative isolate flex min-h-[calc(100svh-90px)] scroll-mt-[90px] items-center overflow-hidden bg-navy text-white max-md:min-h-[calc(100svh-75px)]"
+>
+  <div class="absolute inset-0 -z-20" aria-hidden={hasShowcase ? "true" : undefined}>
+    {
+      visuals.map((visual, i) => (
+        <div
+          class:list={["showcase-slide absolute inset-0", i === 0 && "is-active"]}
+          data-slide
+          data-name={visual.name || undefined}
+        >
+          <Image
+            src={visual.image}
+            alt={visual.alt}
+            width={1920}
+            height={1280}
+            loading="lazy"
+            class="showcase-photo absolute inset-0 h-full w-full object-cover"
+            style={visual.position ? `object-position:${visual.position}` : undefined}
+          />
+        </div>
+      ))
+    }
+  </div>
+  <div
+    class="absolute inset-0 -z-10"
+    aria-hidden="true"
+    style="background:linear-gradient(90deg,rgba(3,17,28,.91) 0%,rgba(3,17,28,.7) 42%,rgba(3,17,28,.42) 100%)"
+  >
+  </div>
+
+  <div
+    class="reveal relative max-w-[900px] py-[70px] pr-[65px] pl-[7%] max-md:py-[40px] max-md:pr-[7%]"
+  >
+    <span class="mb-[22px] block text-[15px] tracking-[3px] text-white/55">{number}</span>
+
+    <div data-panels>
+      {
+        panels.map((panel, i) => (
+          <div data-panel class:list={["grid-area-inherit", i === 0 && "is-active"]}>
+            <p class="eyebrow font-bold text-lime">{panel.category}</p>
+            <h3 class="m-0 text-[36px] leading-[1.06] tracking-[-2px] text-shadow-[0_2px_12px_rgba(0,0,0,0.2)] md:text-[clamp(42px,5.3vw,76px)]">
+              {panel.title}
+            </h3>
+            <p class="mt-[25px] text-[17px] text-[#f0f4f3] md:text-xl">{panel.description}</p>
+            <p class="mt-6 mb-0 text-xs font-bold tracking-[2px]">COMO FUNCIONA</p>
+            <ul class="mx-0 my-2.5 mb-7 list-disc pl-5 text-base text-[#f0f4f3]">
+              {panel.how.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <a href="#contato" data-service-cta={service.tab} class="btn">Solicitar este serviço</a>
+
+    {
+      service.slides && (
+        <div class="mt-[23px] flex items-center gap-[15px] max-md:gap-2.5">
+          <button
+            type="button"
+            data-prev
+            aria-label={`Tema anterior de ${service.title}`}
+            class="h-[42px] w-[42px] cursor-pointer rounded-full border border-white/40 bg-navy/45 text-xl text-white transition-colors hover:bg-green"
+          >
+            ←
+          </button>
+          <span
+            data-counter
+            data-total={service.slides.length}
+            class="min-w-[55px] text-[13px] tabular-nums"
+          >
+            {pad(1)} / {pad(service.slides.length)}
+          </span>
+          <button
+            type="button"
+            data-next
+            aria-label={`Próximo tema de ${service.title}`}
+            class="h-[42px] w-[42px] cursor-pointer rounded-full border border-white/40 bg-navy/45 text-xl text-white transition-colors hover:bg-green"
+          >
+            →
+          </button>
+          <button
+            type="button"
+            data-pause
+            data-pause-text="Pausar"
+            data-play-text="Reproduzir"
+            data-subject={`carrossel de ${service.title}`}
+            aria-pressed="false"
+            class="h-[42px] cursor-pointer rounded-[22px] border border-white/40 bg-navy/45 px-[18px] text-[13px] text-white transition-colors hover:bg-green max-md:px-3"
+          >
+            Pausar
+          </button>
+        </div>
+      )
+    }
+
+    {
+      service.slides && (
+        <div
+          class="mt-[18px] flex max-w-[640px] flex-wrap gap-1.5"
+          aria-label={`Temas de ${service.title}`}
+        >
+          {service.slides.map((slide, i) => (
+            <button
+              type="button"
+              data-goto={i}
+              aria-pressed={i === 0}
+              class="cursor-pointer rounded-[18px] border border-white/40 bg-[#061a2a66] px-2.5 py-[5px] text-xs text-white transition-colors hover:bg-[#0a2538] aria-pressed:border-lime aria-pressed:bg-green"
+            >
+              {slide.name}
+            </button>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</article>

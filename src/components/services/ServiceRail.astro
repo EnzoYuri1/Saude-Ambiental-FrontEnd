@@ -1,0 +1,23 @@
+---
+import { services } from "@/data/services";
+---
+
+<div data-rail class="service-rail" aria-label="Navegação dos serviços">
+  <div class="flex flex-col items-center leading-[1.15]">
+    <span data-rail-current>01</span>
+    <span class="text-xl text-white/50">/</span>
+    <small data-rail-total class="text-sm text-white/60">06</small>
+  </div>
+  <div class="rail-dots">
+    {
+      services.map((service) => (
+        <button
+          type="button"
+          data-rail-dot
+          aria-label={`Ir para ${service.title}`}
+          class="cursor-pointer"
+        />
+      ))
+    }
+  </div>
+</div>
