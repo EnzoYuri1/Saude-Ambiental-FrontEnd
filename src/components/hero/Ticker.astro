@@ -1,0 +1,25 @@
+---
+const items = ["CONTROLE DE PRAGAS", "HIGIENIZAÇÃO", "QUALIDADE DA ÁGUA", "SAÚDE AMBIENTAL"];
+
+const sequence = [...items, ...items];
+---
+
+<div
+  class="overflow-hidden bg-lime py-[22px] text-[15px] font-bold tracking-[2px]"
+  aria-label="Nossas especialidades"
+>
+  <div class="marquee-track">
+    {
+      [false, true].map((ghost) => (
+        <div class="flex shrink-0 items-center" aria-hidden={ghost || undefined}>
+          {sequence.map((item) => (
+            <>
+              <span>{item}</span>
+              <span class="mx-[38px] text-green">✦</span>
+            </>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
