@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+import { about } from "@/data/about";
+import { images } from "@/data/images";
+
+const gallery = {
+  main: {
+    image: images.gallery.pulverizacao,
+    alt: "Técnico realizando aplicação no ambiente",
+    captionTop: "EM AÇÃO",
+    captionStrong: "Um cuidado que vai além.",
+  },
+  side: [
+    { image: images.gallery.bebedouro, caption: "Água", alt: "Higienização de bebedouro" },
+    { image: images.gallery.cisterna, caption: "Ambientes", alt: "Limpeza de cisterna" },
+    { image: images.gallery.fachada, caption: "Estruturas", alt: "Limpeza de fachada" },
+  ],
+};
+---
+
+<section
+  id="sobre"
+  class="grid items-center gap-x-16 gap-y-14 bg-white px-[7%] pt-[90px] pb-[56px] lg:grid-cols-[1.1fr_1fr] max-md:grid-cols-1 max-md:pt-[60px]"
+>
+  <div class="max-w-none">
+    <p class="eyebrow font-bold text-green">{about.eyebrow}</p>
+    <h2 class="mb-[25px] text-[34px] leading-[1.14] md:text-[44px]">
+      {about.titleLine1}<br />
+      <span class="text-green">{about.titleLine2}</span>
+    </h2>
+    {
+      about.paragraphs.map((paragraph) => (
+        <p class="max-w-[600px] text-[17px] leading-[1.8] text-muted max-md:text-base">
+          {paragraph}
+        </p>
+      ))
+    }
+    <p class="my-7 max-w-[600px] border-l-[3px] border-green pl-5 text-lg text-navy">
+      {about.purposeLine1}<br />
+      <strong class="text-green">{about.purposeStrong}</strong>
+    </p>
+    <a href={about.cta.href} class="text-link">{about.cta.label}</a>
+  </div>
+
+  <div
+    class="grid h-[370px] grid-cols-[2.4fr_1fr] gap-2.5 overflow-hidden md:h-[480px] lg:grid-cols-[3fr_1fr] lg:gap-4"
+  >
+    <figure class="relative m-0 min-h-0 min-w-0 overflow-hidden rounded-lg bg-navy">
+      <Image
+        src={gallery.main.image}
+        alt={gallery.main.alt}
+        width={1200}
+        height={1400}
+        loading="lazy"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div
+        class="absolute inset-x-0 bottom-0 top-2/5 bg-gradient-to-b from-transparent to-[#031620e0]"
+        aria-hidden="true"
+      >
+      </div>
+      <figcaption class="absolute right-5 bottom-[25px] left-[25px] z-1 leading-[1.25] text-white">
+        <span class="mb-2.5 block text-xs text-lime">{gallery.main.captionTop}</span>
+        <strong class="block text-2xl md:text-[28px]">{gallery.main.captionStrong}</strong>
+      </figcaption>
+    </figure>
+    <div class="grid grid-rows-3 gap-2.5 lg:gap-4">
+      {
+        gallery.side.map((photo) => (
+          <figure class="relative m-0 min-h-0 min-w-0 overflow-hidden rounded-lg bg-navy">
+            <Image
+              src={photo.image}
+              alt={photo.alt}
+              width={520}
+              height={420}
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <div
+              class="absolute inset-x-0 bottom-0 top-2/5 bg-gradient-to-b from-transparent to-[#031620e0]"
+              aria-hidden="true"
+            />
+            <figcaption class="absolute right-2 bottom-3 left-2.5 z-1 text-xs font-bold text-white md:text-sm">
+              {photo.caption}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+
+  <div
+    class="grid grid-cols-2 gap-x-4 gap-y-6 border-t border-line pt-8 md:grid-cols-4 lg:col-span-2"
+  >
+    {
+      about.facts.map((fact) => (
+        <div>
+          <strong class="text-[30px] leading-[1.2] text-green md:text-[38px]">
+            {fact.value}{" "}
+            <span class="text-base text-navy max-md:block max-md:mt-1 max-md:text-sm">
+              {fact.unit}
+            </span>
+          </strong>
+          <p class="mt-2 text-sm leading-[1.5] text-muted">{fact.label}</p>
+        </div>
+      ))
+    }
+    <div class="md:border-l md:border-line md:pl-[25px]">
+      <strong class="text-lg text-navy">{about.purposeFact.title}</strong>
+      <p class="mt-2 text-sm leading-[1.5] text-muted">{about.purposeFact.text}</p>
+    </div>
+  </div>
+</section>
