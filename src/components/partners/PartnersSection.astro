@@ -1,0 +1,66 @@
+---
+import { partners, partnersHeading } from "@/data/partners";
+---
+
+<section
+  data-marquee
+  class="overflow-hidden border-y border-[#e2eae5] bg-paper py-[35px] pb-[42px]"
+  aria-label="Marcas de clientes e parceiros"
+>
+  <div class="mb-5 flex items-center justify-between gap-5 px-[7%] max-md:items-start">
+    <div>
+      <p class="eyebrow mb-[7px] text-[12px] tracking-normal text-green">
+        {partnersHeading.eyebrow}
+      </p>
+      <h2 class="m-0 text-[23px] tracking-normal md:text-[26px]">{partnersHeading.title}</h2>
+    </div>
+    <button
+      type="button"
+      data-marquee-pause
+      data-pause-text="Pausar marcas"
+      data-play-text="Reproduzir marcas"
+      data-subject="marcas"
+      aria-pressed="false"
+      class="min-h-[44px] shrink-0 cursor-pointer rounded-md border border-[#b5cabc] bg-transparent px-4 py-2.5 text-sm text-green max-md:px-3 max-md:py-2 max-md:text-[13px]"
+    >
+      Pausar marcas
+    </button>
+  </div>
+
+  <div class="marquee-hover-pause overflow-x-auto bg-white [scrollbar-width:thin]">
+    <div class="marquee-track">
+      {
+        [false, true].map((ghost) => (
+          <div class="flex shrink-0" aria-hidden={ghost || undefined}>
+            {partners.map((partner) => (
+              <div class="flex h-[112px] w-[195px] shrink-0 items-center justify-center md:w-[215px]">
+                <span class="flex items-center gap-2.5 text-[15px] font-bold text-[#5e7079]">
+                  {partner.shape === "drop" ? (
+                    <svg
+                      width="26"
+                      height="26"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 3C12 3 6 10.5 6 15a6 6 0 0 0 12 0C18 10.5 12 3 12 3Z" />
+                    </svg>
+                  ) : (
+                    <span
+                      class:list={[
+                        "h-9 w-9 bg-[#5e7079]/25",
+                        partner.shape === "circle" ? "rounded-full" : "rounded-md",
+                      ]}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span class="max-w-[150px] leading-tight">{partner.name}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
