@@ -1,0 +1,25 @@
+---
+import QuoteForm from "@/components/contact/QuoteForm.astro";
+import Logo from "@/components/layout/Logo.astro";
+---
+
+<section
+  id="contato"
+  class="grid gap-[30px] bg-navy px-[7%] py-[100px] text-white md:grid-cols-[1fr_1.1fr] md:gap-[100px] max-md:py-[65px]"
+  aria-labelledby="contact-title"
+>
+  <div>
+    <p class="eyebrow font-bold text-lime">VAMOS CUIDAR DO SEU AMBIENTE</p>
+    <h2 id="contact-title" class="text-[clamp(34px,4vw,54px)] leading-[1.12] tracking-[-2px]">
+      O próximo passo<br />é falar com a gente.
+    </h2>
+    <p class="text-[#cedcdd]">
+      Conte o que você precisa.<br />Prepare sua solicitação de orçamento.
+    </p>
+    <div class="mt-10 w-fit rounded-md bg-white p-[18px] max-md:hidden">
+      <Logo class="w-[200px]" />
+    </div>
+  </div>
+
+  <QuoteForm />
+</section>
