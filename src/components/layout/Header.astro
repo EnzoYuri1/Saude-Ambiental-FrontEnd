@@ -1,0 +1,25 @@
+---
+import { navLinks, ctaLabel, contactAnchor } from "@/data/site";
+import Logo from "@/components/layout/Logo.astro";
+---
+
+<header
+  class="sticky top-0 z-20 flex h-[90px] items-center justify-between border-b border-[#e7eeeb] bg-white px-[5%] max-md:h-[75px]"
+>
+  <a href="#inicio" aria-label="Ir para o início" class="shrink-0">
+    <Logo class="w-[190px] max-md:w-[160px]" />
+  </a>
+
+  <button
+    type="button"
+    data-menu-button
+    aria-expanded="false"
+    aria-label="Abrir menu"
+    class="site-menu-btn">☰</button
+  >
+
+  <nav data-nav aria-label="Navegação principal" class="site-nav">
+    {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+    <a href={contactAnchor} class="nav-cta">{ctaLabel}</a>
+  </nav>
+</header>
