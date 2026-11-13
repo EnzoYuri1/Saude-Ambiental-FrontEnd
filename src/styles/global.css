@@ -90,7 +90,7 @@
 
   /* Marquee infinito (ticker, parceiros, avaliações). */
   .marquee-track {
-    @apply w-max animate-marquee;
+    @apply flex w-max animate-marquee;
   }
   [data-paused] .marquee-track,
   .marquee-hover-pause:hover .marquee-track,
