@@ -1,0 +1,33 @@
+---
+import { faq } from "@/data/faq";
+---
+
+<section
+  id="duvidas"
+  class="grid gap-[35px] bg-paper px-[7%] py-[100px] md:grid-cols-[1fr_1.5fr] md:gap-[70px] max-md:py-[65px] max-md:gap-[15px]"
+  aria-labelledby="faq-title"
+>
+  <div>
+    <p class="eyebrow font-bold text-green">TIRE SUAS DÚVIDAS</p>
+    <h2 id="faq-title" class="text-[clamp(34px,4vw,54px)] leading-[1.12] tracking-[-2px]">
+      Antes de chamar<br />a gente.
+    </h2>
+    <p class="text-muted">
+      Informação para escolher<br />e se preparar com tranquilidade.
+    </p>
+  </div>
+
+  <div>
+    {
+      faq.map((item) => (
+        <details class="faq-item border-b border-[#ccd9d1]">
+          <summary>
+            {item.question}
+            <span class="faq-plus absolute right-1 top-4 text-2xl text-green" aria-hidden="true" />
+          </summary>
+          <p>{item.answer}</p>
+        </details>
+      ))
+    }
+  </div>
+</section>
