@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Design tokens — extraídos do layout de referência.
+   Todo o site consome estes tokens; nada de hex solto nos componentes.
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  --color-navy: #12324e;
+  --color-navy-deep: #0a1f30;
+  --color-green: #258859;
+  --color-green-dark: #1b6943;
+  --color-lime: #c4ef8c;
+  --color-ink: #163348;
+  --color-muted: #5e7079;
+  --color-paper: #f6f8f7;
+  --color-line: #dce8e0;
+
+  --font-sans: Arial, Helvetica, sans-serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-fade-photo: fade-photo 0.65s ease both;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes fade-photo {
+    from {
+      opacity: 0.35;
+      transform: scale(1.02);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+  }
+  @media (max-width: 760px) {
+    html {
+      scroll-padding-top: 75px;
+    }
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-green);
+    outline-offset: 5px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Componentes compartilhados
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  /* Respiro horizontal padrão das seções (7% como no layout original). */
+  .container-x {
+    @apply px-[7%];
+  }
+
+  .eyebrow {
+    @apply mb-[22px] text-[13px] font-bold tracking-[2px];
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md bg-green px-7 py-4 text-[15px] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-dark;
+  }
+  .btn-outline {
+    @apply border border-white/45 bg-transparent hover:bg-white/10;
+  }
+  .btn-full {
+    @apply w-full;
+  }
+
+  .text-link {
+    @apply mt-[15px] inline-block border-b border-green px-0 pb-[5px] font-bold text-green;
+  }
+
+  /* Marquee infinito (ticker, parceiros, avaliações). */
+  .marquee-track {
+    @apply w-max animate-marquee;
+  }
+  [data-paused] .marquee-track,
+  .marquee-hover-pause:hover .marquee-track,
+  .marquee-hover-pause:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Showcases (hero + seções de serviço): slides empilhados com crossfade. */
+  .showcase-slide {
+    @apply opacity-0 transition-opacity duration-[1200ms] ease-out;
+  }
+  .showcase-slide.is-active {
+    @apply opacity-100;
+  }
+  .showcase-slide.is-active .showcase-photo {
+    @apply animate-fade-photo;
+  }
+
+  /* Painéis de conteúdo de um showcase: empilhados em grid (sem reflow). */
+  [data-panels] {
+    display: grid;
+  }
+  [data-panels] > [data-panel] {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+  }
+  [data-panels] > [data-panel].is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Animação de entrada ao rolar. */
+  .reveal {
+    opacity: 0;
+    translate: 0 20px;
+    transition:
+      opacity 0.7s ease,
+      translate 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* Cabeçalho: menu mobile (comportamento definido no CSS, JS só alterna .open). */
+  .site-menu-btn {
+    @apply hidden cursor-pointer border-0 bg-transparent text-[26px] text-navy;
+  }
+  .site-nav {
+    @apply flex items-center gap-[30px] text-sm font-semibold;
+  }
+  .site-nav > a:not(.nav-cta) {
+    @apply transition-colors hover:text-green;
+  }
+  .nav-cta {
+    @apply rounded-[30px] border border-green px-[22px] py-[11px] transition-colors hover:bg-green hover:text-white;
+  }
+  @media (max-width: 760px) {
+    .site-menu-btn {
+      @apply block;
+    }
+    .site-nav {
+      @apply absolute top-[75px] right-0 left-0 z-30 hidden flex-col items-stretch gap-0 border-b border-line bg-white p-[25px];
+    }
+    .site-nav.open {
+      @apply flex;
+    }
+    .site-nav > a {
+      @apply border-b border-line/60 py-2.5 last:border-0;
+    }
+    .nav-cta {
+      @apply mt-3 text-center;
+    }
+  }
+
+  /* Trilho fixo de navegação dos serviços (aparece durante a rolagem). */
+  .service-rail {
+    @apply fixed top-1/2 right-[3%] z-[18] -translate-y-[40%] text-center text-white opacity-0 invisible transition-all duration-300;
+  }
+  .service-rail.shown {
+    @apply visible -translate-y-1/2 opacity-100;
+  }
+  .service-rail [data-rail-current] {
+    @apply block text-[34px] leading-tight font-bold text-lime;
+  }
+  .service-rail [data-rail-total] {
+    @apply text-xl text-white/50;
+  }
+  .service-rail .rail-dots {
+    @apply mt-5 flex flex-col items-center gap-[3px];
+  }
+  .service-rail .rail-dots button {
+    @apply grid h-6 w-8 place-items-center border-0 bg-transparent p-0;
+  }
+  .service-rail .rail-dots button::after {
+    content: "";
+    @apply block h-2 w-2 rounded-full bg-white/40 transition-colors;
+  }
+  .service-rail .rail-dots button:hover::after {
+    @apply bg-white/70;
+  }
+  .service-rail .rail-dots button.active::after {
+    @apply bg-lime;
+  }
+
+  /* FAQ (details/summary nativo). */
+  .faq-item summary {
+    @apply relative cursor-pointer py-[23px] pr-[38px] font-semibold list-none;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-plus::after {
+    content: "+";
+  }
+  .faq-item[open] .faq-plus::after {
+    content: "−";
+  }
+  .faq-item > p {
+    @apply mb-[25px] pr-[30px] text-muted;
+  }
+
+  /* Diálogo de orçamento. */
+  dialog::backdrop {
+    background: #061c2acd;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Movimento reduzido: um único ponto de desligamento global.
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+  .marquee-hover-pause .marquee-ghost,
+  [data-marquee] [aria-hidden="true"] {
+    display: none;
+  }
+}
